@@ -1,0 +1,22 @@
+name: Testing workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Python Test Script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Python
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Install requirements and packages
+        run: |
+          chmod 777 install_sudo.sh
+          bash -f install_sudo.sh
+      - name: Run main script
+        run: python3 main.py

@@ -1,7 +1,14 @@
+import argparse
 import os
 import pyfiglet
 import subprocess
 import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', '--update', help='Updates MultiDownloader')
+parser.add_argument('-c', '--curl', help='Uses curl for download')
+parser.add_argument('-w', '--wget', help='Uses wget for download')
+parser.parse_args()
 
 def banner():
 	banner_figlet = pyfiglet.figlet_format("MultiDownloader", font="small")
@@ -36,6 +43,9 @@ def main():
 			menu()
 		elif (choice == "4"):
 			print("[!] Exiting...")
+			sys.exit()
+		elif type(choice) != int:
+			print("[!!!] Error. Invalid choice.")
 			sys.exit()
 
 try:

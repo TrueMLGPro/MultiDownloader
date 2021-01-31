@@ -9,7 +9,7 @@ if [ "" = "$PKG_OK1" ]; then
   echo "[!] No $REQUIRED_PKG1 found. Setting up $REQUIRED_PKG1."
   sudo apt --yes install $REQUIRED_PKG1
 fi
-REQUIRED_PKG2="python3"
+REQUIRED_PKG2="python"
 PKG_OK2=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG2 | grep "install ok installed")
 echo "[3/6] [i] Checking for $REQUIRED_PKG2: $PKG_OK2"
 if [ "" = "$PKG_OK2" ]; then

@@ -15,10 +15,10 @@ def banner():
 	print(banner_figlet)
 
 def menu():
-	print("1. Download using curl" + "\n"
+	print("\n" + "1. Download using curl" + "\n"
 	       + "2. Download using wget" + "\n"
            + "3. Update MultiDownloader" + "\n"
-           + "4. Exit" + "\n")
+           + "4. Exit")
 
 def main():
 	banner()
@@ -34,12 +34,7 @@ def main():
 			menu()
 		elif (choice == "3"):
 			print("[i] Getting latest updates for MultiDownloader..." + "\n")
-			updater_executable = os.access('scripts/update.sh', os.X_OK)
-			if (updater_executable):
-				subprocess.call('scripts/update.sh', shell=True)
-			else:
-				os.chmod('scripts/update.sh', 0o777)
-				subprocess.call('scripts/update.sh', shell=True)
+			subprocess.call('sh scripts/update.sh', shell=True)
 			menu()
 		elif (choice == "4"):
 			print("[!] Exiting...")

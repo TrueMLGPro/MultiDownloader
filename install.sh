@@ -1,35 +1,35 @@
 #!/bin/bash
-echo "[1/6] [i] Starting installation. Checking for package updates..."
+echo "$(tput setaf 2)[1/6] $(tput setaf 4)[i] $(tput setaf 7)Starting installation. Checking for package updates..."
 apt update --yes
 apt upgrade --yes
 REQUIRED_PKG1="git"
 PKG_OK1=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG1 | grep "install ok installed")
-echo "[2/6] [i] Checking for $REQUIRED_PKG1: $PKG_OK1"
+echo "$(tput setaf 2)[2/6] $(tput setaf 4)[i] $(tput setaf 7)Checking for $REQUIRED_PKG1: $PKG_OK1"
 if [ "" = "$PKG_OK1" ]; then
   echo "[!] No $REQUIRED_PKG1 found. Setting up $REQUIRED_PKG1."
   apt --yes install $REQUIRED_PKG1
 fi
 REQUIRED_PKG2="python"
 PKG_OK2=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG2 | grep "install ok installed")
-echo "[3/6] [i] Checking for $REQUIRED_PKG2: $PKG_OK2"
+echo "$(tput setaf 2)[3/6] $(tput setaf 4)[i] $(tput setaf 7)Checking for $REQUIRED_PKG2: $PKG_OK2"
 if [ "" = "$PKG_OK2" ]; then
   echo "[!] No $REQUIRED_PKG2 found. Setting up $REQUIRED_PKG2."
   apt --yes install $REQUIRED_PKG2
 fi
 REQUIRED_PKG3="curl"
 PKG_OK3=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG3 | grep "install ok installed")
-echo "[4/6] [i] Checking for $REQUIRED_PKG3: $PKG_OK3"
+echo "$(tput setaf 2)[4/6] $(tput setaf 4)[i] $(tput setaf 7)Checking for $REQUIRED_PKG3: $PKG_OK3"
 if [ "" = "$PKG_OK3" ]; then
   echo "[!] No $REQUIRED_PKG3 found. Setting up $REQUIRED_PKG3."
   apt --yes install $REQUIRED_PKG3
 fi
 REQUIRED_PKG4="wget"
 PKG_OK4=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG4 | grep "install ok installed")
-echo "[5/6] [i] Checking for $REQUIRED_PKG4: $PKG_OK4"
+echo "$(tput setaf 2)[5/6] $(tput setaf 4)[i] $(tput setaf 7)Checking for $REQUIRED_PKG4: $PKG_OK4"
 if [ "" = "$PKG_OK4" ]; then
   echo "[!] No $REQUIRED_PKG4 found. Setting up $REQUIRED_PKG4."
   apt --yes install $REQUIRED_PKG4
 fi
-echo "[6/6] [i] Installing requirements..."
+echo "$(tput setaf 2)[6/6] $(tput setaf 4)[i] $(tput setaf 7)Installing requirements..."
 pip3 install -r REQUIREMENTS.txt
-echo "[i] Done."
+echo "$(tput setaf 2)[i] Done."

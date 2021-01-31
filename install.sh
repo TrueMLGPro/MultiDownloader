@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "[1/6] [i] Starting installation. Checking for package updates..."
-apt update && apt upgrade --yes
+sudo apt update --yes
+sudo apt upgrade --yes
 REQUIRED_PKG1="git"
 PKG_OK1=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG1 | grep "install ok installed")
 echo "[2/6] [i] Checking for $REQUIRED_PKG1: $PKG_OK1"

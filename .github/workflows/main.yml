@@ -18,5 +18,5 @@ jobs:
         run: |
           chmod 777 install_sudo.sh
           bash -f install_sudo.sh
-      - name: Run main script
-        run: python3 main.py
+      - name: Run main script with args
+        run: python3 main.py -h

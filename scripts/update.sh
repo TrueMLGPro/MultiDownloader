@@ -7,5 +7,5 @@ if [ "" = "$PKG_OK" ]; then
   apt --yes install $REQUIRED_PKG
 fi
 echo "$(tput -T xterm setaf 2)[2/2] $(tput -T xterm setaf 4)[i] $(tput -T xterm sgr0)Pulling latest changes from repo..."
-git pull origin master
+git pull origin master --no-rebase
 echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

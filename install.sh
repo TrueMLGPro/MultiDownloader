@@ -32,4 +32,4 @@ if [ "" = "$PKG_OK4" ]; then
 fi
 echo "$(tput -T xterm setaf 2)[6/6] $(tput -T xterm setaf 4)[i] $(tput -T xterm sgr0)Installing requirements..."
 pip3 install -r REQUIREMENTS.txt
-echo "$(tput -T xterm setaf 2)[i] Done.$(tput -T xterm sgr0)"
+echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

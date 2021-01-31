@@ -8,4 +8,4 @@ if [ "" = "$PKG_OK" ]; then
 fi
 echo "$(tput -T xterm setaf 2)[2/2] $(tput -T xterm setaf 4)[i] $(tput -T xterm sgr0)Pulling latest changes from repo..."
 git pull origin master
-echo "$(tput -T xterm setaf 2)[i] Done.$(tput -T xterm sgr0)"
+echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

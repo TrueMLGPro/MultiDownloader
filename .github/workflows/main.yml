@@ -1,5 +1,7 @@
 name: Testing workflow
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -19,4 +21,13 @@ jobs:
           chmod 777 install_sudo.sh
           bash -f install_sudo.sh
       - name: Run main script with args
-        run: python3 main.py -h
+        run: |
+          echo "$(tput -T xterm setaf 2)[1/4] $(tput -T xterm setaf 4)[i] Testing help argument...$(tput -T xterm sgr0)"
+          python3 main.py -h
+          echo "$(tput -T xterm setaf 2)[2/4] $(tput -T xterm setaf 4)[i] Testing curl argument...$(tput -T xterm sgr0)"
+          python3 main.py -c "test.xyz/file.txt"
+          echo "$(tput -T xterm setaf 2)[3/4] $(tput -T xterm setaf 4)[i] Testing wget argument...$(tput -T xterm sgr0)"
+          python3 main.py -w "test.xyz/file_1.txt"
+          echo "$(tput -T xterm setaf 2)[4/4] $(tput -T xterm setaf 4)[i] Testing update argument...$(tput -T xterm sgr0)"
+          python3 main.py -u
+          echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

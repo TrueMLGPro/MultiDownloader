@@ -6,6 +6,7 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('URL', metavar='url', help='a url to download', nargs='?')
+parser.add_argument('-f', '--filename', dest='filename', help='Sets filename for file which is being downloaded')
 parser.add_argument('-u', '--update', dest='update', action='store_true', help='Updates MultiDownloader')
 parser.add_argument('-c', '--curl', dest='curl', action='store_true', help='Uses curl for download')
 parser.add_argument('-w', '--wget', dest='wget', action='store_true', help='Uses wget for download')
@@ -32,10 +33,11 @@ def main():
 	
 			if (choice == "1"):
 				print("[i] Using curl to download..." + "\n")
-				curl_download(input("[+] Enter URL: "))
+				curl_download(input("[+] Enter URL: "), input("[+] Enter filename: "))
 				menu()
 			elif (choice == "2"):
 				print("[i] Using wget to download..." + "\n")
+				wget_download(input("[+] Enter URL: "), input("[+] Enter filename: "))
 				menu()
 			elif (choice == "3"):
 				print("[i] Getting latest updates for MultiDownloader..." + "\n")
@@ -50,21 +52,25 @@ def main():
 				print("[!!!] Error. Invalid choice.")
 				sys.exit()
 
-def curl_download(url):
-	print("[i] Downloading (curl) - " + url)
+def curl_download(url, filename):
+	print("[i] Downloading (curl) - " + url + " " + filename)
+	subprocess.call(f"curl -L -o {filename} {url}", shell=True)
+	# TODO
 
-def wget_download(url):
-	print("[i] Downloading (wget) - " + url)
+def wget_download(url, filename):
+	print("[i] Downloading (wget) - " + url + " " + filename)
+	subprocess.call(f"wget -O {filename} {url}", shell=True)
+	# TODO
 
 def launch_updater():
 	print("[i] Getting latest updates for MultiDownloader..." + "\n")
 	subprocess.call('sh scripts/update.sh', shell=True)
 
 if (args.curl):
-	curl_download(args.URL)
+	curl_download(args.URL, args.filename)
 
 if (args.wget):
-	wget_download(args.URL)
+	wget_download(args.URL, args.filename)
 
 if (args.update):
 	launch_updater()

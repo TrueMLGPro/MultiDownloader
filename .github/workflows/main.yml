@@ -25,9 +25,9 @@ jobs:
           echo "$(tput -T xterm setaf 2)[1/4] $(tput -T xterm setaf 4)[i] Testing help argument...$(tput -T xterm sgr0)"
           python3 main.py -h
           echo "$(tput -T xterm setaf 2)[2/4] $(tput -T xterm setaf 4)[i] Testing curl argument...$(tput -T xterm sgr0)"
-          python3 main.py -c "test.xyz/file.txt"
+          python3 main.py -c -f google_curl.html google.com
           echo "$(tput -T xterm setaf 2)[3/4] $(tput -T xterm setaf 4)[i] Testing wget argument...$(tput -T xterm sgr0)"
-          python3 main.py -w "test.xyz/file_1.txt"
+          python3 main.py -w -f google_wget.html google.com
           echo "$(tput -T xterm setaf 2)[4/4] $(tput -T xterm setaf 4)[i] Testing update argument...$(tput -T xterm sgr0)"
           python3 main.py -u
           echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

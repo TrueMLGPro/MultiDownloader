@@ -34,7 +34,7 @@ jobs:
       - name: Zip everything
         run: zip -r artifact.zip .
       - name: Generate and upload artifacts
-        uses: actions/upload-artifacts@v2
+        uses: actions/upload-artifact@v2
         with:
           name: Artifact
           path: ./artifact.zip

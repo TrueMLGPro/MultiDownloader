@@ -31,3 +31,10 @@ jobs:
           echo "$(tput -T xterm setaf 2)[4/4] $(tput -T xterm setaf 4)[i] Testing update argument...$(tput -T xterm sgr0)"
           python3 main.py -u
           echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"
+      - name: Zip everything
+        run: zip -r artifact.zip .
+      - name: Generate and upload artifacts
+        uses: actions/upload-artifacts@v2
+        with:
+          name: Artifact
+          path: ./artifact.zip

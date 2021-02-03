@@ -4,12 +4,21 @@ import pyfiglet
 import subprocess
 import sys
 
-parser = argparse.ArgumentParser()
-parser.add_argument('URL', metavar='url', help='a url to download', nargs='?')
-parser.add_argument('-f', '--filename', dest='filename', help='Sets filename for file which is being downloaded')
-parser.add_argument('-u', '--update', dest='update', action='store_true', help='Updates MultiDownloader')
-parser.add_argument('-c', '--curl', dest='curl', action='store_true', help='Uses curl for download')
-parser.add_argument('-w', '--wget', dest='wget', action='store_true', help='Uses wget for download')
+parser = argparse.ArgumentParser(add_help=False)
+group_download = parser.add_argument_group('Download Tools')
+group_download.add_argument('URL', metavar='url', help='a url to download', nargs='?')
+group_download.add_argument('-c', '--curl', dest='curl', action='store_true', help='Uses curl for download')
+group_download.add_argument('-w', '--wget', dest='wget', action='store_true', help='Uses wget for download')
+group_download.add_argument('-H', '--httrack', dest='httrack', action='store_true', help='Uses httrack for mirroring')
+group_download_args = parser.add_argument_group('Download Arguments')
+group_download_args.add_argument('-d', '--depth', dest='depth', help='Defines depth of mirror (httrack only)')
+group_download_args.add_argument('-eD', '--ext-depth', dest='ext_depth', help='Defines depth of mirror for external links (httrack only)')
+group_download_args.add_argument('-cN', '--conn-num', dest='conn_num', help='Defines a number of active connections during mirroring (httrack only)')
+group_files = parser.add_argument_group('Files')
+group_files.add_argument('-f', '--filename', dest='filename', help='Sets filename (or path) for file which is being downloaded')
+group_misc = parser.add_argument_group('Misc')
+group_misc.add_argument('-u', '--update', dest='update', action='store_true', help='Updates MultiDownloader')
+group_misc.add_argument('-h', '--help', action='help', help='Shows this help message and exits')
 args = parser.parse_args()
 
 def banner():
@@ -19,9 +28,10 @@ def banner():
 def menu():
 	print("\n" + "1. Download using curl" + "\n"
 	       + "2. Download using wget" + "\n"
-           + "3. Update MultiDownloader" + "\n"
-           + "4. Exit" + "\n"
-           + "5. Get args")
+           + "3. Mirror website using httrack" + "\n"
+           + "4. Update Multidownloader" + "\n"
+           + "5. Exit" + "\n"
+           + "6. Get args")
 
 def main():
 	if (len(sys.argv) <= 1):
@@ -32,35 +42,46 @@ def main():
 			choice = input("[>>] ")
 	
 			if (choice == "1"):
-				print("[i] Using curl to download..." + "\n")
-				curl_download(input("[+] Enter URL: "), input("[+] Enter filename: "))
+				print("[i] Using curl to download...")
+				curl_download(input("[+] Enter URL: "),
+					input("[+] Enter filename: "))
 				menu()
 			elif (choice == "2"):
-				print("[i] Using wget to download..." + "\n")
-				wget_download(input("[+] Enter URL: "), input("[+] Enter filename: "))
+				print("[i] Using wget to download...")
+				wget_download(input("[+] Enter URL: "),
+					input("[+] Enter filename: "))
 				menu()
 			elif (choice == "3"):
+				print("[i] Using httrack to mirror...")
+				httrack_download(input("[+] Enter URL: "),
+					input("[+] Enter project path for mirror: "),
+					input("[+] Enter depth level: "),
+					input("[+] Enter external links depth level: "),
+					input("[+] Enter number of connections: "))
+			elif (choice == "4"):
 				print("[i] Getting latest updates for MultiDownloader..." + "\n")
 				subprocess.call('sh scripts/update.sh', shell=True)
 				menu()
-			elif (choice == "4"):
+			elif (choice == "5"):
 				print("[!] Exiting...")
 				sys.exit()
-			elif (choice == "5"):
+			elif (choice == "6"):
 				print(args)
 			elif type(choice) != int:
-				print("[!!!] Error. Invalid choice.")
+				print("[!!!] Invalid choice. Exiting...")
 				sys.exit()
 
 def curl_download(url, filename):
-	print("[i] Downloading (curl) - " + url + " " + filename)
+	print("[i] Downloading using curl - " + url + " with filename: " + filename)
 	subprocess.call(f"curl -L -o {filename} {url}", shell=True)
-	# TODO
 
 def wget_download(url, filename):
-	print("[i] Downloading (wget) - " + url + " " + filename)
+	print("[i] Downloading using wget - " + url + " with filename: " + filename)
 	subprocess.call(f"wget -O {filename} {url}", shell=True)
-	# TODO
+
+def httrack_download(url, path, mirror_depth, ext_links_depth, conn_num):
+	print("[i] Cloning using httrack - " + url + " on path: " + path)
+	subprocess.call(f"httrack {url} -O {path} -r{mirror_depth} -%e{ext_links_depth} -c{conn_num}", shell=True)
 
 def launch_updater():
 	print("[i] Getting latest updates for MultiDownloader..." + "\n")
@@ -71,6 +92,9 @@ if (args.curl):
 
 if (args.wget):
 	wget_download(args.URL, args.filename)
+
+if (args.httrack):
+	httrack_download(args.URL, args.filename, args.depth, args.ext_depth, args.conn_num)
 
 if (args.update):
 	launch_updater()

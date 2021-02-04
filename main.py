@@ -11,6 +11,7 @@ group_download.add_argument('-c', '--curl', dest='curl', action='store_true', he
 group_download.add_argument('-w', '--wget', dest='wget', action='store_true', help='Uses wget for download')
 group_download.add_argument('-H', '--httrack', dest='httrack', action='store_true', help='Uses httrack for mirroring')
 group_download_args = parser.add_argument_group('Download Arguments')
+group_download_args.add_argument('-v', '--verbose', dest='verbose', action='store_true', help='Makes output more detailed')
 group_download_args.add_argument('-d', '--depth', dest='depth', help='Defines depth of mirror (httrack only)')
 group_download_args.add_argument('-eD', '--ext-depth', dest='ext_depth', help='Defines depth of mirror for external links (httrack only)')
 group_download_args.add_argument('-cN', '--conn-num', dest='conn_num', help='Defines a number of active connections during mirroring (httrack only)')
@@ -44,12 +45,14 @@ def main():
 			if (choice == "1"):
 				print("[i] Using curl to download...")
 				curl_download(input("[+] Enter URL: "),
-					input("[+] Enter filename: "))
+					input("[+] Enter filename: "),
+					input("[+] Verbose? (y/n): "))
 				menu()
 			elif (choice == "2"):
 				print("[i] Using wget to download...")
 				wget_download(input("[+] Enter URL: "),
-					input("[+] Enter filename: "))
+					input("[+] Enter filename: "),
+					input("[+] Verbose? (y/n): "))
 				menu()
 			elif (choice == "3"):
 				print("[i] Using httrack to mirror...")
@@ -57,7 +60,8 @@ def main():
 					input("[+] Enter project path for mirror: "),
 					input("[+] Enter depth level: "),
 					input("[+] Enter external links depth level: "),
-					input("[+] Enter number of connections: "))
+					input("[+] Enter number of connections: "),
+					input("[+] Verbose? (y/n): "))
 			elif (choice == "4"):
 				print("[i] Getting latest updates for MultiDownloader..." + "\n")
 				subprocess.call('sh scripts/update.sh', shell=True)
@@ -71,15 +75,25 @@ def main():
 				print("[!!!] Invalid choice. Exiting...")
 				sys.exit()
 
-def curl_download(url, filename):
+def curl_download(url, filename, verbose=None):
 	print("[i] Downloading using curl - " + url + " with filename: " + filename)
-	subprocess.call(f"curl -L -o {filename} {url}", shell=True)
+	if (verbose == "y"):
+		subprocess.call(f"curl -L -O {filename} -v {url}", shell=True)
+	elif (verbose == "n"):
+		subprocess.call(f"curl -L -O {filename} {url}", shell=True)
+	else:
+		subprocess.call(f"curl -L -O {filename} {url}", shell=True)
 
-def wget_download(url, filename):
-	print("[i] Downloading using wget - " + url + " with filename: " + filename)
-	subprocess.call(f"wget -O {filename} {url}", shell=True)
+def wget_download(url, filename, verbose=None):
+	print("[i] Downloading using wget - " + url + " with filename: " + filename + "\n" + ("Verbose: ") + str(verbose))
+	if (verbose == "y"):	
+		subprocess.call(f"wget -O {filename} -v {url}", shell=True)
+	elif (verbose == "n"):
+		subprocess.call(f"wget -O {filename} {url}", shell=True)
+	else:
+		subprocess.call(f"wget -O {filename} {url}", shell=True)
 
-def httrack_download(url, path, mirror_depth, ext_links_depth, conn_num):
+def httrack_download(url, path, mirror_depth, ext_links_depth, conn_num, verbose=None):
 	print("[i] Cloning using httrack - " + url + " on path: " + path)
 	subprocess.call(f"httrack {url} -O {path} -r{mirror_depth} -%e{ext_links_depth} -c{conn_num}", shell=True)
 
@@ -88,13 +102,22 @@ def launch_updater():
 	subprocess.call('sh scripts/update.sh', shell=True)
 
 if (args.curl):
-	curl_download(args.URL, args.filename)
+	if (args.verbose):
+		curl_download(args.URL, args.filename, args.verbose)
+	else:
+		curl_download(args.URL, args.filename)
 
 if (args.wget):
-	wget_download(args.URL, args.filename)
+	if (args.verbose):
+		wget_download(args.URL, args.filename, args.verbose)
+	else:
+		wget_download(args.URL, args.filename)
 
 if (args.httrack):
-	httrack_download(args.URL, args.filename, args.depth, args.ext_depth, args.conn_num)
+	if (args.verbose):
+		httrack_download(args.URL, args.filename, args.depth, args.ext_depth, args.conn_num, args.verbose)
+	else:
+		httrack_download(args.URL, args.filename, args.depth, args.ext_depth, args.conn_num)
 
 if (args.update):
 	launch_updater()

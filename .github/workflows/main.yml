@@ -31,11 +31,11 @@ jobs:
           echo "$(tput -T xterm setaf 2)[4/8] $(tput -T xterm setaf 4)[i] Testing httrack argument...$(tput -T xterm sgr0)"
           python3 main.py -H -f ./google-mirror -d 1 -eD 1 google.com
           echo "$(tput -T xterm setaf 2)[5/8] $(tput -T xterm setaf 4)[i] Testing curl argument with verbosity...$(tput -T xterm sgr0)"
-          python3 main.py -c -f google_curl.html google.com
+          python3 main.py -c -v -f google_curl.html google.com
           echo "$(tput -T xterm setaf 2)[6/8] $(tput -T xterm setaf 4)[i] Testing wget argument with verbosity...$(tput -T xterm sgr0)"
-          python3 main.py -w -f google_wget.html google.com
+          python3 main.py -w -v -f google_wget.html google.com
           echo "$(tput -T xterm setaf 2)[7/8] $(tput -T xterm setaf 4)[i] Testing httrack argument with verbosity...$(tput -T xterm sgr0)"
-          python3 main.py -H -f ./google-mirror -d 1 -eD 1 google.com
+          python3 main.py -H -v -f ./google-mirror -d 1 -eD 1 google.com
           echo "$(tput -T xterm setaf 2)[8/8] $(tput -T xterm setaf 4)[i] Testing update argument...$(tput -T xterm sgr0)"
           python3 main.py -u
           echo "$(tput -T xterm setaf 2)[✓] Done.$(tput -T xterm sgr0)"

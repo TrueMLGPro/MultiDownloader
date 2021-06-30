@@ -1,6 +1,6 @@
 # MultiDownloader
 
-[![Platform: Linux](https://img.shields.io/static/v1?label=Platform&message=Linux&color=5d91ff&style=for-the-badge&logo=linux)]
+![Platform: Linux](https://img.shields.io/static/v1?label=Platform&message=Linux&color=5d91ff&style=for-the-badge&logo=linux)
 
 ## What is this
 

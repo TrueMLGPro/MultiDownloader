@@ -28,6 +28,10 @@ After installation run main.py
 python3 main.py
 ```
 
+## Screenshots
+
+![Screenshot_1](https://user-images.githubusercontent.com/38999995/153831628-df611eb5-797f-4714-bfc1-be7e962b152f.png)
+
 ## License
 
 ```plain

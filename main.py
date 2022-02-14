@@ -44,7 +44,7 @@ def menu():
 	print("\n" + "1. Download using curl" + "\n"
 	       + "2. Download using wget" + "\n"
            + "3. Mirror website using httrack" + "\n"
-           + "4. Update Multidownloader" + "\n"
+           + "4. Update MultiDownloader" + "\n"
            + "5. Exit" + "\n"
            + "6. Get args")
 

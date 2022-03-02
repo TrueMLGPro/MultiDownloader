@@ -30,7 +30,9 @@ python3 main.py
 
 ## Screenshots
 
-![Screenshot_1](https://user-images.githubusercontent.com/38999995/153831628-df611eb5-797f-4714-bfc1-be7e962b152f.png)
+![Screenshot_Main](https://user-images.githubusercontent.com/38999995/156339691-f37411fa-cbff-4682-a451-f9eac77afe44.png)
+
+![Screenshot_Arguments](https://user-images.githubusercontent.com/38999995/156340252-7c40d60a-f2d0-4d01-ba8a-b15a5509ba3c.png)
 
 ## License
 
